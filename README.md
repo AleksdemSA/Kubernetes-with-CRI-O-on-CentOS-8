@@ -63,3 +63,4 @@ kubectl -n hostinfo create ingress hostinfo --class=nginx --rule=hostinfo.YOUR_D
 ## SSL and Kubernetes
 
 * [Kubernetes and self-signed certificate](SSC_Kubernetes.md)
+* [Kubernetes and Let's Encrypt certificate with cert-manager](SSL_Kubernetes.md)
