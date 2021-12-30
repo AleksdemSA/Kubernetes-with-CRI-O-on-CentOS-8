@@ -4,13 +4,13 @@ Generate certificate (change CERT_NAME and DOMAIN)
 
 ```
 openssl genrsa -out CERT_NAME.key 2048
-openssl req -new -x509 -key CERT_NAME.key -out CERT_NAME.cert -days 3600 -subj /CN=DOMAIN
+openssl req -new -x509 -key CERT_NAME.key -out CERT_NAME.crt -days 3600 -subj /CN=DOMAIN
 ```
 
 Create secret (change CERT_NAME once again)
 
 ```
-kubectl create secret tls CERT_NAME --cert=CERT_NAME.cert --key=CERT_NAME.key -n CERT_NAME
+kubectl create secret tls CERT_NAME --cert=CERT_NAME.crt --key=CERT_NAME.key -n default
 ```
 
 Example ingress config (see spec: tls)
@@ -27,14 +27,14 @@ spec:
   tls:
   - hosts:
     - DOMAIN
-    CERT_NAME: CERT_NAME
+    secretName: CERT_NAME
   rules:
   - host: DOMAIN
     http:
       paths:
       - backend:
           service:
-            name: CERT_NAME
+            name: SERVICE
             port:
               number: 8080
         path: /
