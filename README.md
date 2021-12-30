@@ -1,6 +1,6 @@
 # Install CRI-O and Kubernetes with Ansible
 
-## Prubuild
+## Prebuild
 This Ansible Playbook will help you install package and configs need to set up Kubernetes with CRI-O on OS CentOS8 Linux. Component versions can be changed in vars/main.yml. Create file hosts and run
 
 ```
