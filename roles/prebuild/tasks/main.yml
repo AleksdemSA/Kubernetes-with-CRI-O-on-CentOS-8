@@ -1,0 +1,126 @@
+- name: Send dnf.conf
+  copy:
+    src: dnf.conf
+    dest: /etc/dnf/dnf.conf
+    mode: 0755
+
+- name: Enable EPEL
+  package:
+    name: epel-release
+    state: latest
+
+- name: Upgrade all packages
+  dnf:
+    name: "*"
+    state: latest
+
+- name: Stop service firewalld (if exist)
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+  ignore_errors: yes
+
+- name: Copy SELinux config
+  copy:
+    src: selinux_config
+    dest: /etc/selinux/config
+    mode: 0644
+
+- name: Disable SELinux
+  selinux:
+    state: disabled
+  notify: reboot
+
+- name: Copy k8s modules config
+  copy:
+    src: mod_k8s.conf
+    dest: /etc/modules-load.d/k8s.conf
+    mode: 0755
+  notify: reboot
+
+- name: Copy sysctl.conf
+  copy:
+    src: sysctl.conf
+    dest: /etc/sysctl.conf
+    mode: 0644
+  notify: reboot
+
+- meta: flush_handlers
+
+- name: Install packages
+  dnf:
+    name: [iproute-tc, htop, vim, curl, lsof, wget, conntrack-tools, libnetfilter_cthelper, socat]
+    state: latest
+
+- name: Install dnf-command(copr)
+  dnf:
+    name: 'dnf-command(copr)'
+    state: latest
+
+- name: "Copy cri-o:{{ crio_version }} repo file"
+  template:
+    src: cri-o.repo.j2
+    dest: /etc/yum.repos.d/cri-o.repo
+    mode: 0644
+
+- name: Install cri-o
+  dnf:
+    name: [cri-o]
+    state: latest
+  notify:
+    - crio
+
+- name: Copy crio.conf
+  copy:
+    src: crio.conf
+    dest: /etc/crio/crio.conf
+    mode: 0644
+  notify:
+    - crio
+
+- name: Make shure a service crio started
+  systemd:
+    state: started
+    daemon-reload: yes
+    enabled: yes
+    name: crio
+
+- name: Copy kubernetes repo
+  copy:
+    src: kubernetes.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+    mode: 0644
+
+- name: Install kubernetes packages
+  yum:
+    name: ["kubelet-{{ kubernetes_version }}", "kubeadm-{{ kubernetes_version }}", "kubectl-{{ kubernetes_version }}"]
+    state: latest
+
+- name: Creates directory /var/lib/kubelet
+  file:
+    path: /var/lib/kubelet
+    state: directory
+
+- name: Send kubelet config
+  copy:
+    src: config.yaml
+    dest: /var/lib/kubelet/config.yaml
+    mode: 0644
+  notify:
+    - kubelet
+
+- name: Send kubelet sysconfig
+  copy:
+    src: kubelet
+    dest: /etc/sysconfig/kubelet
+    mode: 0644
+  notify:
+    - kubelet
+
+- name: Make shure a service kubelet started
+  systemd:
+    state: started
+    daemon-reload: yes
+    enabled: yes
+    name: kubelet

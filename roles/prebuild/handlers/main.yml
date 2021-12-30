@@ -1,0 +1,20 @@
+- name: sysctl
+  shell: sysctl --system
+
+- name: reboot
+  reboot:
+    reboot_timeout: 300
+
+- name: kubelet
+  systemd:
+    state: restarted
+    daemon-reload: yes
+    enabled: yes
+    name: kubelet
+
+- name: crio
+  systemd:
+    state: restarted
+    daemon-reload: yes
+    enabled: yes
+    name: crio
