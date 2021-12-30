@@ -59,3 +59,7 @@ kubectl -n hostinfo create deployment hostinfo --image=aleksdem/hostinfo --port=
 kubectl -n hostinfo expose deployment hostinfo
 kubectl -n hostinfo create ingress hostinfo --class=nginx --rule=hostinfo.YOUR_DOMAIN/*=hostinfo:8080
 ```
+
+## SSL and Kubernetes
+
+* [Kubernetes and self-signed certificate](SSC_Kubernetes.md)
