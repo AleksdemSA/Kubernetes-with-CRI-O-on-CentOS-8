@@ -72,3 +72,7 @@ kubectl -n hostinfo create ingress hostinfo --class=nginx --rule=hostinfo.YOUR_D
 ## Check your cluster
 
 * [Polaris](https://github.com/FairwindsOps/polaris)
+
+## Need HPA (Horizontal Pod Autoscaling)?
+
+* [HPA with metric-server](HPA.md)
