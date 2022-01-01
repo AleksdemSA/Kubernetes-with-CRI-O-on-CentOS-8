@@ -60,7 +60,7 @@ kubectl -n hostinfo expose deployment hostinfo
 kubectl -n hostinfo create ingress hostinfo --class=nginx --rule=hostinfo.YOUR_DOMAIN/*=hostinfo:8080
 ```
 
-# Dynamic Volume Provisioning
+## Dynamic Volume Provisioning
 
 * [Local Path Provisioner](https://github.com/rancher/local-path-provisioner) (accessModes: ReadWriteOnce)
 
