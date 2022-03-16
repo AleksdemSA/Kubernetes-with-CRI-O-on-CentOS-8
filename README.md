@@ -1,11 +1,13 @@
 <h1 align="center">Install CRI-O and Kubernetes with Ansible</h1>
 
+
 ## Prebuild
 This Ansible Playbook will help you install package and configs need to set up Kubernetes with CRI-O on OS CentOS8 Linux. Component versions can be changed in vars/main.yml. Create file hosts and run
 
 ```
 ansible-playbook 00_prebuild.yml
 ```
+
 
 ## Examples
 
@@ -60,18 +62,22 @@ kubectl -n hostinfo expose deployment hostinfo
 kubectl -n hostinfo create ingress hostinfo --class=nginx --rule=hostinfo.YOUR_DOMAIN/*=hostinfo:8080
 ```
 
+
 ## Dynamic Volume Provisioning
 
 * [Local Path Provisioner](https://github.com/rancher/local-path-provisioner) (accessModes: ReadWriteOnce)
+
 
 ## SSL and Kubernetes
 
 * [Kubernetes and self-signed certificate](SSC_Kubernetes.md)
 * [Kubernetes and Let's Encrypt certificate with cert-manager](SSL_Kubernetes.md)
 
+
 ## Check your cluster
 
 * [Polaris](https://github.com/FairwindsOps/polaris)
+
 
 ## Need HPA (Horizontal Pod Autoscaling)?
 
