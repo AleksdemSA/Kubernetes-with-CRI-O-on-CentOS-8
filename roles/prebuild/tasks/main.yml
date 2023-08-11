@@ -27,11 +27,6 @@
     dest: /etc/selinux/config
     mode: 0644
 
-- name: Disable SELinux
-  selinux:
-    state: disabled
-  notify: reboot
-
 - name: Copy k8s modules config
   copy:
     src: mod_k8s.conf
@@ -93,7 +88,7 @@
     mode: 0644
 
 - name: Install kubernetes packages
-  yum:
+  dnf:
     name: ["kubelet-{{ kubernetes_version }}", "kubeadm-{{ kubernetes_version }}", "kubectl-{{ kubernetes_version }}"]
     state: latest
 
