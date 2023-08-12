@@ -53,7 +53,7 @@ kubectl taint node $HOSTNAME node-role.kubernetes.io/control-plane:NoSchedule-
 Run ingress with external IP (change YOUR_EXTERNAL_IP)
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
 kubectl patch -n ingress-nginx svc ingress-nginx-controller -p '{"spec":{"externalIPs":["YOUR_EXTERNAL_IP"]}}'
 kubectl get svc -A
 sleep 60
