@@ -74,6 +74,16 @@ kubectl -n hostinfo create ingress hostinfo --class=nginx --rule=hostinfo.YOUR_D
 
 * [Local Path Provisioner](https://github.com/rancher/local-path-provisioner) (accessModes: ReadWriteOnce)
 
+Change default storage class. Get classes:
+
+```sh
+kubectl get storageclass
+```
+
+```sh
+kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
 
 ## SSL and Kubernetes
 
