@@ -1,2 +1,2 @@
-kubernetes_version: 1.23.1
-crio_version: 1.23
+kubernetes_version: 1.27.4
+crio_version: 1.25
